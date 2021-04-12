@@ -32,7 +32,6 @@ sealed abstract class Expr {
 }
 
 
-
 // Handle the following types of equation:
 // - addition
 // - subtraction
@@ -50,13 +49,39 @@ sealed abstract class Expr {
 
 object Calculator {
   def eval(calc: Expr): Double = {
-    ???
+    calc match {
+      case Add(Num(num1), Num(num2)) => (num1 + num2)
+      case Add(Num(num1), expr) => (num1 + eval(expr))
+      case Add(expr, Num(num1)) => (num1 + eval(expr))
+
+      case Mul(Num(num1), Num(num2)) => (num1 * num2)
+      case Mul(Num(num1), expr) => (num1 * eval(expr))
+      case Mul(expr, Num(num1)) => (num1 * eval(expr))
+      case _ => 2.2
+    }
   }
 }
 
+
+//val calc1: Add = Add(Num(1.1), Mul(Num(2.2), Num(3.3)))
 object IntCalculator {
   def eval(calc: Expr): Int = {
-    ???
+    calc match {
+      case Add (Num(num1), Num(num2)) => (num1 +num2).toInt
+      case Add (Num(num1), expr) => (num1 + eval(expr)).toInt
+      case Add (expr, Num(num1)) => (num1 + eval(expr)).toInt
+
+      case Mul (Num(num1), Num(num2)) => (num1 * num2).toInt
+      case Mul (Num(num1), expr) => (num1 * eval(expr)).toInt
+      case Mul (expr, Num(num1)) => (num1 * eval(expr)).toInt
+       case _ => 2
+      //case _ => 2.2
+//      case Subtraction(num1, num2) => s"$num1 - $num2"
+//      case Mul(num1, num2) => s"$num1 x $num2"
+//      case Division(num1, num2) => s"$num1 / $num2"
+//      case SquareRoot(num) => s"√$num"
+//      case Num(num) => num.toString
+    }
   }
 }
 
@@ -68,6 +93,42 @@ object IntCalculator {
 // ----------------------------------------------
 
 object Expr {
+
+
+}
+
+object Exercise11Calculator {
+   val calc1: Add = Add(Num(1.1), Mul(Num(2.2), Num(3.3)))
+
+  // val calc2 = Add(Mul(Num(1.1), Num(2.2)), Num(3.3))
+
+  def main(args: Array[String]): Unit = {
+    println("stringify")
+    println(calc1.stringify)
+    // println(calc2.stringify)
+
+    println("Calculator.eval")
+    println(Calculator.eval(calc1))
+    // println(Calculator.eval(calc2))
+
+    println("IntCalculator.eval")
+    // println(IntCalculator.eval(calc1))
+    // println(IntCalculator.eval(calc2))
+
+    println("pythag")
+    // println(Expr.pythag(3, 4))
+    // println(Calculator.eval(Expr.pythag(3, 4)))
+    // println(IntCalculator.eval(Expr.pythag(3, 4)))
+
+    println("factorial")
+    // println(Expr.factorial(4))
+    // println(Calculator.eval(Expr.factorial(4)))
+    // println(IntCalculator.eval(Expr.factorial(4)))
+  }
+}
+
+
+
 
 //  def stringify:String = this match {
 //    case Add(num1, num2) => s"$num1 + $num2"
@@ -88,41 +149,10 @@ object Expr {
 //      case Num(num) => num.toString
 //    }
 //  }
-  // def pythag(a: Double, b: Double): Expr = {
-  //   ???
-  // }
+// def pythag(a: Double, b: Double): Expr = {
+//   ???
+// }
 
-  // def factorial(n: Int): Expr = {
-  //   ???
-  // }
-}
-
-object Exercise11Calculator {
-   val calc1: Add = Add(Num(1.1), Mul(Num(2.2), Num(3.3)))
-
-  // val calc2 = Add(Mul(Num(1.1), Num(2.2)), Num(3.3))
-
-  def main(args: Array[String]): Unit = {
-    println("stringify")
-    println(calc1.stringify)
-    // println(calc2.stringify)
-
-    println("Calculator.eval")
-    // println(Calculator.eval(calc1))
-    // println(Calculator.eval(calc2))
-
-    println("IntCalculator.eval")
-    // println(IntCalculator.eval(calc1))
-    // println(IntCalculator.eval(calc2))
-
-    println("pythag")
-    // println(Expr.pythag(3, 4))
-    // println(Calculator.eval(Expr.pythag(3, 4)))
-    // println(IntCalculator.eval(Expr.pythag(3, 4)))
-
-    println("factorial")
-    // println(Expr.factorial(4))
-    // println(Calculator.eval(Expr.factorial(4)))
-    // println(IntCalculator.eval(Expr.factorial(4)))
-  }
-}
+// def factorial(n: Int): Expr = {
+//   ???
+// }
