@@ -1,34 +1,33 @@
 package part2
 
+import part2.IntCalculator.eval
+
 //import part2.Expr.stringify
 
 // ----------------------------------------------
 
 // Step 1. Write a definition for Expr here!
-case class Add(first:Expr, second:Expr) extends Expr {
-  override def stringify = s"${first.stringify} + ${second.stringify}"
-}
-case class Subtraction(first:Expr, second:Expr) extends Expr{
-  override def stringify = s"$first - $second"
-}
-case class Mul(first:Expr, second:Expr) extends Expr{
-  override def stringify = s"$first x $second"
-}
-case class Division(first:Expr, second:Expr) extends Expr {
-  override def stringify = s"$first / $second"
-}
-case class SquareRoot(num:Expr) extends Expr {
-  override def stringify = s"√$num"
-}
+case class Add(first:Expr, second:Expr) extends Expr
+case class Subtraction(first:Expr, second:Expr) extends Expr
+case class Mul(first:Expr, second:Expr) extends Expr
+case class Division(first:Expr, second:Expr) extends Expr
+case class SquareRoot(num:Expr) extends Expr
 
-case class Num(num:Double) extends Expr {
-  override def stringify: String = num.toString
+case class Num(num:Double) extends Expr
+sealed abstract class Expr {
+
   override def toString: String = stringify
 
-}
-
-sealed abstract class Expr {
-  def stringify:String
+  def stringify:String  = {
+    this match {
+      case Add(num1, num2) => s"$num1 + $num2"
+      case Subtraction(num1, num2) => s"$num1 - $num2"
+      case Mul(num1, num2) => s"${num1.stringify} x ${num2.stringify}"
+      case Division(num1, num2) => s"$num1 / $num2"
+      case SquareRoot(num) => s"√$num"
+      case Num(num) => num.toString
+    }
+  }
 }
 
 
@@ -50,37 +49,26 @@ sealed abstract class Expr {
 object Calculator {
   def eval(calc: Expr): Double = {
     calc match {
-      case Add(Num(num1), Num(num2)) => (num1 + num2)
-      case Add(Num(num1), expr) => (num1 + eval(expr))
-      case Add(expr, Num(num1)) => (num1 + eval(expr))
-
-      case Mul(Num(num1), Num(num2)) => (num1 * num2)
-      case Mul(Num(num1), expr) => (num1 * eval(expr))
-      case Mul(expr, Num(num1)) => (num1 * eval(expr))
-      case _ => 2.2
+      case Add (expr1, expr2) => eval(expr1) + eval(expr2)
+      case Mul (expr1, expr2) => eval(expr1) * eval(expr2)
+      case Division (expr1, expr2) => eval(expr1) / eval(expr2)
+      case Subtraction (expr1, expr2) => eval(expr1) - eval(expr2)
+      case SquareRoot (expr) => eval(expr) / eval(expr)
+      case Num (num) => num
     }
   }
 }
 
-
-//val calc1: Add = Add(Num(1.1), Mul(Num(2.2), Num(3.3)))
 object IntCalculator {
   def eval(calc: Expr): Int = {
     calc match {
-      case Add (Num(num1), Num(num2)) => (num1 +num2).toInt
-      case Add (Num(num1), expr) => (num1 + eval(expr)).toInt
-      case Add (expr, Num(num1)) => (num1 + eval(expr)).toInt
-
-      case Mul (Num(num1), Num(num2)) => (num1 * num2).toInt
-      case Mul (Num(num1), expr) => (num1 * eval(expr)).toInt
-      case Mul (expr, Num(num1)) => (num1 * eval(expr)).toInt
-       case _ => 2
-      //case _ => 2.2
-//      case Subtraction(num1, num2) => s"$num1 - $num2"
-//      case Mul(num1, num2) => s"$num1 x $num2"
-//      case Division(num1, num2) => s"$num1 / $num2"
-//      case SquareRoot(num) => s"√$num"
-//      case Num(num) => num.toString
+      //case Add (Num(num1), Num(num2)) => (num1 +num2).toInt
+      case Add (expr1, expr2) => eval(expr1) + eval(expr2)
+      case Mul (expr1, expr2) => eval(expr1) * eval(expr2)
+      case Division (expr1, expr2) => eval(expr1) / eval(expr2)
+      case Subtraction (expr1, expr2) => eval(expr1) - eval(expr2)
+      case SquareRoot (expr) => eval(expr) / eval(expr)
+      case Num (num) => num.toInt
     }
   }
 }
