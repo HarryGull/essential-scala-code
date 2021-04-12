@@ -4,7 +4,17 @@ package part2
 
 // Step 1. Write a definition for Expr here!
 
-sealed abstract class Expr
+sealed abstract class Expr {
+  def stringify(expr: Expr): String = {
+    expr match {
+      case Addition(num1, num2) => s"$num1 + $num2"
+      case Subtraction(num1, num2) => s"$num1 - $num2"
+      case Multiplication(num1, num2) => s"$num1 x $num2"
+      case Division(num1, num2) => s"$num1 / $num2"
+      case SquareRoot(num) => s"$num"
+    }
+  }
+}
 
 // Handle the following types of equation:
 // - addition
