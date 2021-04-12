@@ -88,20 +88,20 @@ object Expr {
 object Exercise11Calculator {
    val calc1: Add = Add(Num(1.1), Mul(Num(2.2), Num(3.3)))
 
-  // val calc2 = Add(Mul(Num(1.1), Num(2.2)), Num(3.3))
+   val calc2: Add = Add(Mul(Num(1.1), Num(2.2)), Num(3.3))
 
   def main(args: Array[String]): Unit = {
     println("stringify")
     println(calc1.stringify)
-    // println(calc2.stringify)
+    println(calc2.stringify)
 
     println("Calculator.eval")
     println(Calculator.eval(calc1))
-    // println(Calculator.eval(calc2))
+    println(Calculator.eval(calc2))
 
     println("IntCalculator.eval")
-    // println(IntCalculator.eval(calc1))
-    // println(IntCalculator.eval(calc2))
+     println(IntCalculator.eval(calc1))
+     println(IntCalculator.eval(calc2))
 
     println("pythag")
     // println(Expr.pythag(3, 4))
